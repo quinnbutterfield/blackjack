@@ -73,9 +73,6 @@ dealer.deal(
 
 
 
-print_all_hands()
-
-
 #deal more cards
 print("Dealing second card!\n")
 dealer.deal(
@@ -86,3 +83,47 @@ dealer.deal(
 )
 
 print_all_hands()
+
+#calculate hand values
+hand_values = list(map(lambda p: dealer.get_hand_value(p.hand), players))
+
+#check for naturals
+
+naturals = [i for i, value in enumerate(hand_values) if value == constants.BLACKJACK]
+
+#check dealer's hand if at least one person was dealt blackjack
+#and their face up card is a 10 or A
+
+dealer_visible_value = dealer.get_hand_value(dealer.hand)
+
+
+if len(naturals) > 0 & dealer_visible_value == (10 or 11):
+    if dealer.hidden.get_value() + dealer_visible_value == constants.BLACKJACK:
+        dealer.hand.append(dealer.hidden)
+        dealer.hidden = None
+        dealer.show_hand()
+        for i in naturals:
+            p = players[i]
+            p.cash += p.bet
+            p.bet = 0
+            #player is done with the hand
+            del players[i]
+        print("Stand off! Bet returned to player " + str(i+1) + "\n")
+#if dealer doesn't have blackjack, return 1.5x bet
+elif len(naturals) > 0:
+    for i in naturals:
+        p = players[i]
+        payout = p.bet * 1.5
+        p.cash += payout
+        p.bet = 0
+        del players[i]
+        print("Player " + str(i+1) + "Blackjack! Paid out 1.5x bet ($" + str(payout) + ")"  "\n")
+
+
+print(hand_values)
+
+print(naturals)
+
+for i in range(len(players)):
+    print("Player " + str(i+1) + "'s turn")
+    dealer.get_player_action(players[i])

@@ -1,4 +1,4 @@
-from ranks import ranks
+import ranks
 
 
 class Card:
@@ -7,4 +7,12 @@ class Card:
         self.rank = rank
 
     def show(self):
-        print(ranks[self.rank] + " of " + self.suit +'\n')
+        print(ranks.RANKS[self.rank] + " of " + self.suit +'\n')
+    def get_value(self):
+        rank = self.rank
+        if rank in ranks.SPECIAL_VALUES.keys():
+           return ranks.SPECIAL_VALUES[rank]
+        else:
+            return rank
+        
+

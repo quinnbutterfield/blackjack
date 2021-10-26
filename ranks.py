@@ -1,4 +1,4 @@
-ranks = {
+RANKS = {
     1: "Ace",
     2: "Two",
     3: "Three",
@@ -12,4 +12,10 @@ ranks = {
     11: "Jack",
     12: "Queen",
     13: "King"
+}
+SPECIAL_VALUES = {
+    1: (1, 10),
+    11: 10,
+    12: 10,
+    13: 10,
 }
