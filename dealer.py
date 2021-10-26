@@ -7,18 +7,18 @@ from deck import Deck
 class Dealer(Player):
     def __init__(self) -> None:
         super().__init__()
-        self.hidden:Card  = None
-        
+        self.hidden: Card = None
+
     def get_response(self):
         while True:
             try:
                 response = float(input("Please place your bet. Minimum $" +
                                  str(MIN_BET) + ", maximum $ " + str(MAX_BET) + "\n"))
                 return response
-                
+
             except:
                 print("Please enter an integer or decimal")
-        
+
     def get_bet(self, player: Player):
         print()
         has_bet = False
@@ -26,9 +26,16 @@ class Dealer(Player):
             response = self.get_response()
             has_bet = player.place_bet(response)
 
+    def show_hand(self):
+        if self.hidden:
+            print("Face down card\n")
+
+        return super().show_hand()
+        
+
     def deal(self, players: "list[Player]", deck: Deck, hidden=False):
         if hidden:
-            self.hidden += deck.draw()
+            self.hidden = deck.draw()
         else:
             for player in players:
                 player.add_card(deck.draw())

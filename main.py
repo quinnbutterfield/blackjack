@@ -48,8 +48,19 @@ masterDeck = Deck(Deck.combineDecks(decks))
 masterDeck.shuffle()
 
 
+def print_hand(player_index):
+    print("******************************\n")
+    print()
+    print("Player " + str(player_index+1) + "'s hand")
+    print()
+    players[player_index].show_hand()
+    print()
 
-
+def print_all_hands():
+    for i in range(constants.NUM_PLAYERS):
+        print_hand(i)
+    print("Dealer's hand\n")
+    dealer.show_hand()
 #deal the initial cards
 print("Dealing first card!\n")
 dealer.deal(
@@ -60,12 +71,9 @@ dealer.deal(
     [dealer], masterDeck
 )
 
-for i in range(constants.NUM_PLAYERS):
-    print("Player " + str(i+1) + "'s hand")
-    players[i].show_hand()
 
-print("Dealer's hand\n")
-dealer.show_hand()
+
+print_all_hands()
 
 
 #deal more cards
@@ -73,3 +81,8 @@ print("Dealing second card!\n")
 dealer.deal(
     players, masterDeck
 )
+dealer.deal(
+    [dealer], masterDeck, hidden=True
+)
+
+print_all_hands()
