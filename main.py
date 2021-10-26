@@ -68,4 +68,8 @@ print("Dealer's hand\n")
 dealer.show_hand()
 
 
-
+#deal more cards
+print("Dealing second card!\n")
+dealer.deal(
+    players, masterDeck
+)

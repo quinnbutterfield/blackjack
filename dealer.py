@@ -28,6 +28,7 @@ class Dealer(Player):
 
     def deal(self, players: "list[Player]", deck: Deck, hidden=False):
         if hidden:
-            self
-        for player in players:
-            player.add_card(deck.draw())
+            self.hidden += deck.draw()
+        else:
+            for player in players:
+                player.add_card(deck.draw())
