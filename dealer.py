@@ -1,4 +1,4 @@
-from ast import parse
+
 from card import Card
 from constants import BLACKJACK, COMMANDS, MAX_BET, MIN_BET
 from player import Player
@@ -14,13 +14,12 @@ class Dealer(Player):
     def get_response(self, prompt, error):
         while True:
             try:
-                return prompt
-
+                response = prompt
+                return
             except:
-                return error
+                print(error)
 
     def get_bet(self, player: Player):
-        response = None
         while True:
             try:
                 response = float(input("Please place your bet. Minimum $" +
@@ -29,9 +28,9 @@ class Dealer(Player):
             except:
                 print("Please enter an integer or decimal")
 
-        player.place_bet(response)
+        return player.place_bet(response)
 
-    def get_player_action(self, player):
+    def get_player_action(self, player: Player, deck: Deck):
         while True:
             try:
                 response = self.parse_command(
@@ -40,8 +39,16 @@ class Dealer(Player):
                 break
             except:
                 print("Please enter a valid command")
-        print(response, " is action")
-      
+        match response:
+            case "hit":
+                self.deal([player], deck)
+                player.show_hand()
+                self.print_hand_value(player)
+            case "stand":
+                print("Player passes")
+            case "quit":
+                raise SystemExit
+        return response
 
     def parse_command(self, command):
         if command in COMMANDS.keys():
@@ -61,6 +68,9 @@ class Dealer(Player):
         else:
             for player in players:
                 player.add_card(deck.draw())
+
+    def print_hand_value(self, player):
+        print("hand value: ", self.get_hand_value(player.hand), "\n")
 
     def get_hand_value(self, hand: "list[Card]"):
         values = map(Card.get_value, hand)

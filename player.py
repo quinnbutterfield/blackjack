@@ -18,7 +18,7 @@ class Player:
         if bet > constants.MAX_BET:
             print("You can only bet $" + str(constants.MAX_BET) + "!")
             return False
-        elif bet < constants.MIN_BET:
+        if bet < constants.MIN_BET:
             print("You must bet at least $" + str(constants.MIN_BET) + "!")
             return False
         else:
@@ -32,4 +32,5 @@ class Player:
     def show_hand(self):
         for card in self.hand:
             card.show()
+        
        
