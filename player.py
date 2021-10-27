@@ -3,10 +3,11 @@ import constants
 
 
 class Player:
-    def __init__(self) -> None:
+    def __init__(self, id) -> None:
         self.hand = []
         self.bet = 0
-        self.cash = 100
+        self.cash = constants.STARTING_CASH
+        self.id = id
 
     def add_card(self, card: Card):
         self.hand.append(card)
